@@ -47,7 +47,6 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
             return new ResponseEntity<String>("Failed", HttpStatus.OK);
         }
-		System.out.println("********"+user.getRole_type());
 		String response = userService.registerUser(user);
 		 //securityService.autologin(user.getEmail(), user.getConfirm_password());
 

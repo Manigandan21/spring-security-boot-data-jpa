@@ -2,6 +2,7 @@ package com.p2p.repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,12 @@ public class UserRepository{
 		return user;
 	}
 	
-	
+	 @Transactional
+	public User findByEmail(String email){
+		 Query query1 = entityManager.createQuery("Select u from User u where u.email=:email");
+		 query1.setParameter("email", email);
+		 User user = (User) query1.getSingleResult();
+		 return user;
+	 }
 	
 }

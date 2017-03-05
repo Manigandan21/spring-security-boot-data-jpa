@@ -3,8 +3,6 @@ package com.p2p.service;
 import java.nio.charset.Charset;
 import java.util.Base64;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,30 +16,26 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	
-	/*@Autowired
+	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
-	*/
+	
 	public String registerUser(User user){
-//		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		/*if(user.getRole_type()==1)
-			user.getProsumer().setId(user.getUser_id());
-		else if(user.getRole_type()==2)
-			user.getConsumer().setId(user.getUser_id());*/
-		System.out.println("_-_-_-_-_-_-_-_-"+user.getRole_type());
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user = userRepository.saveUser(user);
-		
 		return "Success!";
 	}
 
 	public String checkCredentials(String authTocken) {
 		String response = "Failure";
 		String[] auth = decodeBasicAuthTocken(authTocken);
-/*		if(auth.length !=0 && auth.length == 2){
+		if(auth.length !=0 && auth.length == 2){
 			User user = userRepository.findByEmail(auth[0]);
-			if(bCryptPasswordEncoder.matches(auth[1], user.getPassword()));
+			System.out.println(user.getPassword()+":"+auth[1]);
+			if(bCryptPasswordEncoder.matches(auth[1], user.getPassword()))
 			response = "Success!";
+			
 		}
-*/		return response;
+		return response;
 	}
 
 	public String findByEmailAsUser(String email){

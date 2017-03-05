@@ -59,6 +59,12 @@ public class User implements Serializable{
 	 @JoinColumn(name = "PROSUMER_ID" ,referencedColumnName="id")
 	Prosumer prosumer;
 
+	public User(User user) {
+		this.setEmail(user.getEmail());
+		this.setPassword(user.getPassword());
+		this.setRole_type(user.getRole_type());
+	}
+
 	public Long getUser_id() {
 		return user_id;
 	}

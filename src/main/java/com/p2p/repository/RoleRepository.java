@@ -1,77 +1,35 @@
 package com.p2p.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.p2p.models.Role;
-
+@Transactional
 @Repository
-public class RoleRepository implements CrudRepository<Role, Integer>{
+public class RoleRepository{
 
-	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+	@PersistenceContext
+	private EntityManager entityManager;
+	  
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 
-	@Override
-	public void delete(Integer arg0) {
-		// TODO Auto-generated method stub
-		
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
 	}
 
-	@Override
-	public void delete(Role arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void delete(Iterable<? extends Role> arg0) {
-		// TODO Auto-generated method stub
-		
+	public List<String> getUserByRole(Integer role_type) {
+		 javax.persistence.Query query1 = entityManager.createQuery("Select u.name from Role u where u.id=:id");
+		 query1.setParameter("id", role_type);
+		 List<String> roles = (List<String>) query1.getResultList();
+		 return roles;
 	}
-
-	@Override
-	public void deleteAll() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean exists(Integer arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Iterable<Role> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Iterable<Role> findAll(Iterable<Integer> arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Role findOne(Integer arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Role> S save(S arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Role> Iterable<S> save(Iterable<S> arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-		//Role getById(Integer id);
+	
 }
