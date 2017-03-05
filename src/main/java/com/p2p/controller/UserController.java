@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.p2p.models.User;
-import com.p2p.service.SecurityServiceImpl;
 import com.p2p.service.UserService;
 import com.p2p.validator.UserValidator;
 
@@ -30,9 +30,6 @@ public class UserController {
 	@Autowired
 	UserValidator userValidator;
 	
-	@Autowired
-    private SecurityServiceImpl securityService;
-	
 	HttpStatus status;
 	
 	/**
@@ -41,14 +38,18 @@ public class UserController {
 	@RequestMapping("/register")
 	@ResponseBody
 	public ResponseEntity<String> create(@RequestBody User user, BindingResult bindingResult, Model model) {
+		System.out.println("Inner");
 		userValidator.validate(user, bindingResult);
-		
+		for(ObjectError er : bindingResult.getAllErrors())
+		{
+		System.out.println(er.toString());
+		}
 		if (bindingResult.hasErrors()) {
             return new ResponseEntity<String>("Failed", HttpStatus.OK);
         }
-		
+		System.out.println("********"+user.getRole_type());
 		String response = userService.registerUser(user);
-		 securityService.autologin(user.getEmail(), user.getConfirm_password());
+		 //securityService.autologin(user.getEmail(), user.getConfirm_password());
 
 		 
 	    return new ResponseEntity<String>(response, HttpStatus.OK);

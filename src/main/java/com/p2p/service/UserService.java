@@ -18,13 +18,17 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	
-	@Autowired
+	/*@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	@Transactional
+	*/
 	public String registerUser(User user){
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		user = userRepository.save(user);
+//		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		/*if(user.getRole_type()==1)
+			user.getProsumer().setId(user.getUser_id());
+		else if(user.getRole_type()==2)
+			user.getConsumer().setId(user.getUser_id());*/
+		System.out.println("_-_-_-_-_-_-_-_-"+user.getRole_type());
+		user = userRepository.saveUser(user);
 		
 		return "Success!";
 	}
@@ -32,17 +36,18 @@ public class UserService {
 	public String checkCredentials(String authTocken) {
 		String response = "Failure";
 		String[] auth = decodeBasicAuthTocken(authTocken);
-		if(auth.length !=0 && auth.length == 2){
+/*		if(auth.length !=0 && auth.length == 2){
 			User user = userRepository.findByEmail(auth[0]);
 			if(bCryptPasswordEncoder.matches(auth[1], user.getPassword()));
 			response = "Success!";
 		}
-		return response;
+*/		return response;
 	}
 
 	public String findByEmailAsUser(String email){
-		User user = userRepository.findByEmail(email);
-		return user.getEmail();
+		return email;
+		/*User user = userRepository.findByEmail(email);
+		return user.getEmail();*/
 	}
 	
 	//Non API methods.

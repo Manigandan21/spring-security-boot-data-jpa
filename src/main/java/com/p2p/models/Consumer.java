@@ -2,11 +2,13 @@ package com.p2p.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="CONSUMER")
+@Table(name="consumer")
 public class Consumer {
 	
 	/*"current_energy_supplier":"tneb",
@@ -16,7 +18,8 @@ public class Consumer {
     "smart_meter_id":300*/
 	
 	@Id
-	private Long user_id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	@Column
 	private String current_energy_supplier;
 	@Column
@@ -27,15 +30,13 @@ public class Consumer {
 	private Long annual_consumption;
 	@Column
 	private Long smart_meter_id;
-	
-	private User user;
 
-	public Long getUser_id() {
-		return user_id;
+	public Long getId() {
+		return id;
 	}
 
-	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCurrent_energy_supplier() {
@@ -76,14 +77,6 @@ public class Consumer {
 
 	public void setSmart_meter_id(Long smart_meter_id) {
 		this.smart_meter_id = smart_meter_id;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 }

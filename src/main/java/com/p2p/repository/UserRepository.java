@@ -1,11 +1,35 @@
 package com.p2p.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.p2p.models.User;
 
 @Transactional
-public interface UserRepository extends CrudRepository<User, Long> {
-	  public User findByEmail(String email);
+@Repository
+public class UserRepository{
+
+	@PersistenceContext
+	private EntityManager entityManager;
+	  
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+
+	public User saveUser(User user) {
+		this.getEntityManager().persist(user);
+		return user;
+	}
+	
+	
+	
 }

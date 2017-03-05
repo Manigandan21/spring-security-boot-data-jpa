@@ -5,9 +5,15 @@ package com.p2p.models;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -15,7 +21,7 @@ import javax.persistence.Transient;
  * @author Manigandan
  */
 @Entity
-@Table(name = "USER_BASIC_INFO")
+@Table(name = "user_basic_info")
 public class User implements Serializable{
 
 	
@@ -29,8 +35,9 @@ public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long user_id;
-	@Column
+	@Column(name="username")
 	String userName;
 	@Column
 	String email;
@@ -43,8 +50,13 @@ public class User implements Serializable{
 	@Column
 	Integer role_type;
 	
-	Consumer consumer;
 	
+	@OneToOne(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
+	@JoinColumn(name = "CONSUMER_ID" , referencedColumnName="id")
+	Consumer consumer;
+	 
+	 @OneToOne(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
+	 @JoinColumn(name = "PROSUMER_ID" ,referencedColumnName="id")
 	Prosumer prosumer;
 
 	public Long getUser_id() {
@@ -111,6 +123,7 @@ public class User implements Serializable{
 	public void setConsumer(Consumer consumer) {
 		this.consumer = consumer;
 	}
+
 
 	public Prosumer getProsumer() {
 		return prosumer;

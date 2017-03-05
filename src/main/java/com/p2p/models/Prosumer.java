@@ -2,11 +2,13 @@ package com.p2p.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PROSUMER")
+@Table(name="prosumer")
 public class Prosumer {
 	
 	/*"project_name": "Wind Mil",
@@ -17,7 +19,8 @@ public class Prosumer {
     "smart_meter_id": 23*/
 	
 	@Id
-	private Long user_id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	@Column
 	private String project_name;
 	@Column
@@ -30,9 +33,6 @@ public class Prosumer {
 	private Long smart_meter_id;
 	@Column
 	private String tech_type;
-	
-	private User user;
-	
 	
 	public String getProject_name() {
 		return project_name;
@@ -82,20 +82,12 @@ public class Prosumer {
 		this.tech_type = tech_type;
 	}
 
-	public User getUser() {
-		return user;
+	public Long geId() {
+		return id;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Long getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
